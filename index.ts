@@ -79,7 +79,7 @@ app.use(async ctx => {
   }
 })
 
-app.listen(1010, async () => {
-  console.log('Server [karura-height] start at: ', 1010);
+app.listen(1020, async () => {
+  console.log('Server [karura-height] start at: ', 1020);
 
 });

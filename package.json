@@ -17,7 +17,7 @@
     "@acala-network/types": "^3.0.2",
     "@open-web3/scanner": "^1.0.1",
     "@polkadot/api": "^6.5.2",
-    "graphql": "^16.3.0",
+    "graphql": "^15.2.0",
     "graphql-request": "^4.2.0",
     "koa": "^2.13.4",
     "moment": "^2.29.1",
