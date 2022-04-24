@@ -97,7 +97,7 @@ app.use(function (ctx) { return __awaiter(void 0, void 0, void 0, function () {
                 lowHeight = Number(low.blocks.nodes[0].number);
                 lowTime = new Date(low.blocks.nodes[0].timestamp).getTime();
                 gap = _recent;
-                data.recent = Number(recent);
+                data.recent = _recent;
                 data.gap = gap;
                 _c.label = 6;
             case 6: return [2 /*return*/, ctx.body = {

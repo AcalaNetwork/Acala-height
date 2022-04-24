@@ -69,7 +69,7 @@ app.use(async ctx => {
     lowHeight = Number(low.blocks.nodes[0].number);
     lowTime = new Date(low.blocks.nodes[0].timestamp).getTime();
     gap = _recent;
-    data.recent = Number(recent);
+    data.recent = _recent;
     data.gap = gap
   }
 
