@@ -1,0 +1,27 @@
+{
+  "name": "acala-height",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "start": "pm2 ./index.ts",
+    "dev": "nodemon index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@acala-network/api": "^3.0.2-9",
+    "@acala-network/types": "^3.0.2",
+    "@open-web3/scanner": "^1.0.1",
+    "@polkadot/api": "^6.5.2",
+    "graphql": "^16.3.0",
+    "graphql-request": "^4.2.0",
+    "koa": "^2.13.4",
+    "moment": "^2.29.1",
+    "mongoose": "^6.3.1",
+    "pm2": "^5.1.2"
+  }
+}

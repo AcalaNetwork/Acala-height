@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  server:
+    container_name: acala-height
+    privileged: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "1010:1010"
+    restart: always
+    environment:
+      NODE_ENV: production
+    networks:
+      - network
+    depends_on:
+      - redis
+      - mongo
+  
+  mongo:
+    image: mongo
+    container_name: price-mongo
+    restart: always
+    volumes:
+      - ./mongo:/data/db
+    networks:
+      - network
+    expose:
+      - "27017"
+networks:
+  network:
+    driver: bridge
