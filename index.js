@@ -58,9 +58,8 @@ var queryLastestBlock = function (network) {
 exports.queryLastestBlock = queryLastestBlock;
 app.use(function (ctx) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, _b, network, recent, from, to, highHeight, lowHeight, highTime, lowTime, gap, data, high, low, _recent, high, low;
-    var _c;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
+    return __generator(this, function (_c) {
+        switch (_c.label) {
             case 0:
                 _a = ctx.request.query, _b = _a.network, network = _b === void 0 ? 'Karura' : _b, recent = _a.recent, from = _a.from, to = _a.to;
                 highHeight = 0;
@@ -74,11 +73,11 @@ app.use(function (ctx) { return __awaiter(void 0, void 0, void 0, function () {
                 lowHeight = Number(from) < Number(to) ? Number(from) : Number(to);
                 return [4 /*yield*/, (0, exports.queryBlock)(network.toUpperCase(), highHeight)];
             case 1:
-                high = _d.sent();
+                high = _c.sent();
                 highTime = new Date(high.blocks.nodes[0].timestamp).getTime();
                 return [4 /*yield*/, (0, exports.queryBlock)(network.toUpperCase(), lowHeight)];
             case 2:
-                low = _d.sent();
+                low = _c.sent();
                 lowTime = new Date(low.blocks.nodes[0].timestamp).getTime();
                 gap = highHeight - lowHeight;
                 data.from = from;
@@ -86,21 +85,21 @@ app.use(function (ctx) { return __awaiter(void 0, void 0, void 0, function () {
                 data.gap = gap;
                 return [3 /*break*/, 6];
             case 3:
-                _recent = (_c = Number(recent)) !== null && _c !== void 0 ? _c : 500;
+                _recent = recent ? Number(recent) : 500;
                 return [4 /*yield*/, (0, exports.queryLastestBlock)(network.toUpperCase())];
             case 4:
-                high = _d.sent();
+                high = _c.sent();
                 highHeight = Number(high.blocks.nodes[0].number);
                 highTime = new Date(high.blocks.nodes[0].timestamp).getTime();
                 return [4 /*yield*/, (0, exports.queryBlock)(network.toUpperCase(), highHeight - _recent)];
             case 5:
-                low = _d.sent();
+                low = _c.sent();
                 lowHeight = Number(low.blocks.nodes[0].number);
                 lowTime = new Date(low.blocks.nodes[0].timestamp).getTime();
                 gap = _recent;
                 data.recent = Number(recent);
                 data.gap = gap;
-                _d.label = 6;
+                _c.label = 6;
             case 6: return [2 /*return*/, ctx.body = {
                     avg: ((highTime - lowTime) / gap) / 1000,
                     data: data

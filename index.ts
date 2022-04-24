@@ -61,7 +61,7 @@ app.use(async ctx => {
     data.to = to;
     data.gap = gap
   } else {
-    const _recent = Number(recent) ?? 500;
+    const _recent = recent ? Number(recent) : 500;
     const high = await queryLastestBlock((network as string).toUpperCase());
     highHeight = Number(high.blocks.nodes[0].number);
     highTime = new Date(high.blocks.nodes[0].timestamp).getTime();
