@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 const liquidTokenDecimals = 12;
 const stakeTokenDecimals = 12;
 
-const getTotalLiquidity = async (api: ApiPromise) => {
+const getTotalStaking = async (api: ApiPromise) => {
   // now
   // toBond: 21233001944
   // legers: 80679280425263358   6840946719082802   6081837485254305
@@ -22,7 +22,6 @@ const getTotalLiquidity = async (api: ApiPromise) => {
 
   stakingLedgers.map(item => {
     const ledge = (item[1] as any).unwrapOrDefault();
-    console.log(ledge.bonded.unwrap().toString())
     totalInSubAccount = totalInSubAccount.add(FixedPointNumber.fromInner(ledge.bonded.unwrap().toString(), stakeTokenDecimals));
   })
 
@@ -32,7 +31,7 @@ const getTotalLiquidity = async (api: ApiPromise) => {
 
 // hash : 0xa78792e33353add048738c97d3a541f8d45eef5e077b12076c153a393dcf994a
 
-const getTotalStaking = async (api: ApiPromise) => {
+const getTotalLiquidity = async (api: ApiPromise) => {
   // now
   // issuance: 819202616804335856
   // voidLiquid: 9145469841
