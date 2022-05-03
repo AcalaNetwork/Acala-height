@@ -3,6 +3,7 @@ import { ApiPromise, WsProvider } from "@polkadot/api";
 import { FixedPointNumber } from "@acala-network/sdk-core";
 import { gql, request } from 'graphql-request';
 import dayjs from "dayjs";
+import { redis } from ".";
 
 const liquidTokenDecimals = 12;
 const stakeTokenDecimals = 12;
@@ -64,6 +65,10 @@ export const queryBlock = () => {
 };
 
 export const calcApr = async (ctx: Context) => {
+  const redisdata = await redis.get('apr');
+  if (redisdata) {
+    return ctx.body = redisdata;
+  }
   const wsProvider = new WsProvider('wss://karura.polkawallet.io/');
   const api = new ApiPromise({ provider: wsProvider });
   await api.isReady.then(() => console.log('api is ready'));
@@ -87,9 +92,9 @@ export const calcApr = async (ctx: Context) => {
   console.log(_totalStaking.toString())
   console.log(_totalLiquidity.toString())
 
-  ctx.body = {
-    exchangeRateCurrent: current.toNumber(),
-    exchangeRate3monthAge: month3age.toNumber(),
-    apr: current.minus(month3age).div(month3age).times(FixedPointNumber.FOUR).toNumber()
-  };
+  const apr = current.minus(month3age).div(month3age).times(FixedPointNumber.FOUR).toNumber();
+
+  await redis.set('apr', apr, 'EX', 60 * 60 * 24 * 3);
+
+  return ctx.body = apr;
 }
