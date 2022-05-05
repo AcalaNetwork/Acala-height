@@ -19,7 +19,7 @@ services:
 
   redis:
     image: redis
-    container_name: price-redis
+    container_name: height-redis
     restart: always
     networks:
       - network
