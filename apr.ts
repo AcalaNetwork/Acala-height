@@ -63,7 +63,7 @@ export const calcApr = async (ctx: Context) => {
   const height = blockData.blocks.nodes[0].parentHash;
 
   if(_network === 'acala' && Number(blockData.blocks.nodes[0].number) <= 960000) {
-    return 0.1450;
+    return ctx.body = 0.1450;
   }
 
   const monthsagoApi = await api.at(height);
