@@ -14,9 +14,9 @@ router.get('/', calcTime);
 app.use(router.routes()).use(router.allowedMethods());
 
 app.listen(1020, () => {
-  // const redisClient = new ioredis({host: 'redis'});
+  const redisClient = new ioredis({host: 'redis'});
   // const redisClient = new ioredis(process.env.REDIS_URL);
-  const redisClient = new ioredis({port: 6379});
+  // const redisClient = new ioredis({port: 6379});
   redisClient.on('connect', () => {
     redis = redisClient;
     console.log(`Redis Connect Success!`);
