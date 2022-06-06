@@ -59,19 +59,17 @@ export const calcApr = async (ctx: Context) => {
   const totalStaking = await getTotalStaking(api);
   const totalLiquidity = await getTotalLiquidity(api, _network === 'karura' ? 'LKSM' : 'LDOT');
 
-  console.log(totalStaking.toString())
-  console.log(totalLiquidity.toString())
-
   const blockData = await queryBlock(_network);
   const height = blockData.blocks.nodes[0].parentHash;
+
+  if(_network === 'acala' && Number(blockData.blocks.nodes[0].number) <= 960000) {
+    return 0.1450;
+  }
 
   const monthsagoApi = await api.at(height);
 
   const _totalStaking = await getTotalStaking(monthsagoApi as any);
   const _totalLiquidity = await getTotalLiquidity(monthsagoApi as any, _network === 'karura' ? 'LKSM' : 'LDOT');
-
-  console.log(_totalStaking.toString())
-  console.log(_totalLiquidity.toString())
 
   const current = FixedPointNumber.fromRational(totalStaking, totalLiquidity);
   const monthsago = FixedPointNumber.fromRational(_totalStaking, _totalLiquidity);
