@@ -59,6 +59,9 @@ export const calcApr = async (ctx: Context) => {
   const totalStaking = await getTotalStaking(api);
   const totalLiquidity = await getTotalLiquidity(api, _network === 'karura' ? 'LKSM' : 'LDOT');
 
+  console.log(totalStaking.toString())
+  console.log(totalLiquidity.toString())
+
   const blockData = await queryBlock(_network);
   const height = blockData.blocks.nodes[0].parentHash;
 
@@ -67,12 +70,17 @@ export const calcApr = async (ctx: Context) => {
   const _totalStaking = await getTotalStaking(monthsagoApi as any);
   const _totalLiquidity = await getTotalLiquidity(monthsagoApi as any, _network === 'karura' ? 'LKSM' : 'LDOT');
 
+  console.log(_totalStaking.toString())
+  console.log(_totalLiquidity.toString())
+
   const current = FixedPointNumber.fromRational(totalStaking, totalLiquidity);
   const monthsago = FixedPointNumber.fromRational(_totalStaking, _totalLiquidity);
 
-  const apr = current.minus(monthsago).div(monthsago).times(_network === 'karura' ?  FixedPointNumber.FOUR : new FixedPointNumber(12)).toNumber();
+  const apr = current.minus(monthsago).div(monthsago).times(_network === 'karura' ?  FixedPointNumber.FOUR : new FixedPointNumber(12));
 
-  await redis.set(`apr:${_network}`, apr, 'EX', 60 * 60 * 24 * 3);
+  if(!apr.isNaN() && !apr.isZero()) {
+    await redis.set(`apr:${_network}`, apr.toNumber(), 'EX', 60 * 60 * 24 * 3);
+  }
 
-  return ctx.body = apr;
+  return ctx.body = apr.toNumber();
 }
