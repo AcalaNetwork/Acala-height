@@ -28,9 +28,8 @@ const getTotalLiquidity = async (api: ApiPromise, token: string) => {
   return FixedPointNumber.fromInner(issuance.toString(), liquidTokenDecimals).add(FixedPointNumber.fromInner(voidLiquid.toString(), liquidTokenDecimals));
 }
 
-export const queryBlock = (network: string) => {
-  const url = network === 'karura' ?  'https://api.subquery.network/sq/AcalaNetwork/karura' : 'https://api.subquery.network/sq/AcalaNetwork/acala__QWNhb';
-  const monthsago = dayjs().subtract(network === 'karura' ? 3 : 1, 'month').format('YYYY-MM-DDTHH:mm:ss');
+export const queryBlock = (network: string, monthsago: string) => {
+  const url = network === 'karura' ? 'https://api.subquery.network/sq/AcalaNetwork/karura' : 'https://api.subquery.network/sq/AcalaNetwork/acala__QWNhb';
 
   return request(url, gql`
     query {
@@ -46,6 +45,20 @@ export const queryBlock = (network: string) => {
   `);
 };
 
+const monthAgoTimes = (network: string) => {
+  let interval_days = 0;
+  if (network === 'karura') {
+    interval_days = 90
+  } else {
+    interval_days = 30
+  }
+
+  return {
+    timeStr: dayjs().subtract(interval_days, 'day').format('YYYY-MM-DDTHH:mm:ss'),
+    days: interval_days
+  }
+}
+
 export const calcApr = async (ctx: Context) => {
   const network = ctx.request.query.network;
   const _network = (network || 'karura') as string;
@@ -59,10 +72,12 @@ export const calcApr = async (ctx: Context) => {
   const totalStaking = await getTotalStaking(api);
   const totalLiquidity = await getTotalLiquidity(api, _network === 'karura' ? 'LKSM' : 'LDOT');
 
-  const blockData = await queryBlock(_network);
+  const { timeStr, days } = monthAgoTimes(_network);
+
+  const blockData = await queryBlock(_network, timeStr);
   const height = blockData.blocks.nodes[0].parentHash;
 
-  if(_network === 'acala' && Number(blockData.blocks.nodes[0].number) <= 960000) {
+  if (_network === 'acala' && Number(blockData.blocks.nodes[0].number) <= 960000) {
     return ctx.body = 0.1450;
   }
 
@@ -74,11 +89,11 @@ export const calcApr = async (ctx: Context) => {
   const current = FixedPointNumber.fromRational(totalStaking, totalLiquidity);
   const monthsago = FixedPointNumber.fromRational(_totalStaking, _totalLiquidity);
 
-  const apr = current.minus(monthsago).div(monthsago).times(_network === 'karura' ?  FixedPointNumber.FOUR : new FixedPointNumber(12));
+  const apr = Math.pow(current.div(monthsago).toNumber(), 365 / days) -1
 
-  if(!apr.isNaN() && !apr.isZero()) {
-    await redis.set(`apr:${_network}`, apr.toNumber(), 'EX', 60 * 60 * 24 * 3);
+  if (!Number.isNaN(apr) || apr === 0) {
+    await redis.set(`apr:${_network}`, apr, 'EX', 60 * 60 * 24 * 3);
   }
 
-  return ctx.body = apr.toNumber();
+  return ctx.body = apr;
 }
