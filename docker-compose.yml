@@ -2,7 +2,7 @@ version: "3"
 
 services:
   server:
-    container_name: acala-height
+    container_name: acala-utils
     privileged: true
     build:
       context: .
@@ -16,15 +16,27 @@ services:
       - network
     depends_on:
       - redis
-
+      - mongo
+  
   redis:
     image: redis
-    container_name: height-redis
+    container_name: utils-redis
     restart: always
     networks:
       - network
     expose:
       - "6379"
+  
+  mongo:
+    image: mongo
+    container_name: utils-mongo
+    restart: always
+    volumes:
+      - /mongo:/data/db
+    networks:
+      - network
+    expose:
+      - "27017"
 networks:
   network:
     driver: bridge
