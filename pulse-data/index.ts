@@ -24,35 +24,35 @@ export const pulseQuery = async (ctx: Context) => {
   const stableTokenData = {
     tvl: todayData.stableTokenIssuanceValue,
     dayChange: (todayData.stableTokenIssuanceValue - yesterdayData.stableTokenIssuanceValue) / yesterdayData.stableTokenIssuanceValue,
-    weekChange: (todayData.stableTokenIssuanceValue - weekData.stableTokenIssuanceValue) / weekData.stableTokenIssuanceValue,
-    monthChange: (todayData.stableTokenIssuanceValue - monthData.stableTokenIssuanceValue) / monthData.stableTokenIssuanceValue,
+    weekChange: !weekData ? '-' : (todayData.stableTokenIssuanceValue - weekData.stableTokenIssuanceValue) / weekData.stableTokenIssuanceValue,
+    monthChange: !monthData ? '-' : (todayData.stableTokenIssuanceValue - monthData.stableTokenIssuanceValue) / monthData.stableTokenIssuanceValue,
     holder: todayData.stableTokenHolder
   };
   const liquidStaking = {
     tvl: todayData.liquidTokenValue,
     dayChange: (todayData.liquidTokenValue - yesterdayData.liquidTokenValue) / yesterdayData.liquidTokenValue,
-    weekChange: (todayData.liquidTokenValue - weekData.liquidTokenValue) / weekData.liquidTokenValue,
-    monthChange: (todayData.liquidTokenValue - monthData.liquidTokenValue) / monthData.liquidTokenValue,
+    weekChange: !weekData ? '-' : (todayData.liquidTokenValue - weekData.liquidTokenValue) / weekData.liquidTokenValue,
+    monthChange: !monthData ? '-' : (todayData.liquidTokenValue - monthData.liquidTokenValue) / monthData.liquidTokenValue,
     holder: todayData.liquidTokenHolder,
   }
   const lcDot = {
     tvl: todayData.lcDOTValue,
     dayChange: (todayData.lcDOTValue - yesterdayData.lcDOTValue) / yesterdayData.lcDOTValue,
-    weekChange: (todayData.lcDOTValue - weekData.lcDOTValue) / weekData.lcDOTValue,
-    monthChange: (todayData.lcDOTValue - monthData.lcDOTValue) / monthData.lcDOTValue,
+    weekChange: !weekData ? '-' : (todayData.lcDOTValue - weekData.lcDOTValue) / weekData.lcDOTValue,
+    monthChange: !monthData ? '-' : (todayData.lcDOTValue - monthData.lcDOTValue) / monthData.lcDOTValue,
     holder: todayData.lcDOTHolder,
   }
   const swap = {
     tvl: todayData.lpTokenStakingValue + todayData.liquidityPoolValue,
     dayChange: (todayData.lpTokenStakingValue + todayData.liquidityPoolValue - yesterdayData.lpTokenStakingValue - yesterdayData.liquidityPoolValue) / (yesterdayData.lpTokenStakingValue + yesterdayData.liquidityPoolValue),
-    weekChange: (todayData.lpTokenStakingValue + todayData.liquidityPoolValue - weekData.lpTokenStakingValue - weekData.liquidityPoolValue) / (weekData.lpTokenStakingValue + weekData.liquidityPoolValue),
-    monthChange: (todayData.lpTokenStakingValue + todayData.liquidityPoolValue - monthData.lpTokenStakingValue - monthData.liquidityPoolValue) / (monthData.lpTokenStakingValue + monthData.liquidityPoolValue),
+    weekChange: !weekData ? '-' : (todayData.lpTokenStakingValue + todayData.liquidityPoolValue - weekData.lpTokenStakingValue - weekData.liquidityPoolValue) / (weekData.lpTokenStakingValue + weekData.liquidityPoolValue),
+    monthChange: !monthData ? '-' : (todayData.lpTokenStakingValue + todayData.liquidityPoolValue - monthData.lpTokenStakingValue - monthData.liquidityPoolValue) / (monthData.lpTokenStakingValue + monthData.liquidityPoolValue),
   }
   const bridge = {
     tvl: todayData.bridgeValue,
     dayChange: (todayData.bridgeValue - yesterdayData.bridgeValue) / yesterdayData.bridgeValue,
-    weekChange: (todayData.bridgeValue - weekData.bridgeValue) / weekData.bridgeValue,
-    monthChange: (todayData.bridgeValue - monthData.bridgeValue) / monthData.bridgeValue,
+    weekChange: !weekData ? '-' : (todayData.bridgeValue - weekData.bridgeValue) / weekData.bridgeValue,
+    monthChange: !monthData ? '-' : (todayData.bridgeValue - monthData.bridgeValue) / monthData.bridgeValue,
   }
 
   return ctx.body = {
