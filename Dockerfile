@@ -5,10 +5,10 @@ EXPOSE 1020
 ADD . /usr/src/app
 WORKDIR /usr/src/app
 
-RUN yarn
+RUN npm install
 
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
-CMD [ "yarn", "start" ]
+CMD [ "npm", "start" ]
