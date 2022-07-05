@@ -6,7 +6,7 @@ import Koa from 'koa';
 import mongo from 'mongoose';
 import { scheduledTask } from './pulseData/task';
 import { pulseQuery } from './pulseData';
-import { runScripts } from './pulseData/script';
+// import { runScripts } from './pulseData/script';
 
 export let redis: Redis;
 
@@ -20,7 +20,7 @@ app.use(router.routes()).use(router.allowedMethods());
 
 scheduledTask();
 
-runScripts();
+// runScripts();
 
 app.listen(1020, () => {
   const redisClient = new ioredis({ host: 'redis' });
