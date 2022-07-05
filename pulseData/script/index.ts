@@ -22,7 +22,7 @@ const queryKaruraChainData = async () => {
   const karuraInstance = await ApiPromise.create({ provider: karuraWsProvider });
   await karuraInstance.isReady;
 
-  const acalaWsProvider = new WsProvider('wss://karura.api.onfinality.io/public-ws');
+  const acalaWsProvider = new WsProvider('wss://acala-rpc-0.aca-api.network/');
   const acalaInstance = await ApiPromise.create({ provider: acalaWsProvider });
   await acalaInstance.isReady;
 
