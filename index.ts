@@ -4,8 +4,9 @@ import { calcApr } from './apr';
 import ioredis, { Redis } from 'ioredis';
 import Koa from 'koa';
 import mongo from 'mongoose';
-import { scheduledTask } from './pulse-data/task';
-import { pulseQuery } from './pulse-data';
+import { scheduledTask } from './pulseData/task';
+import { pulseQuery } from './pulseData';
+import { runScripts } from './pulseData/script';
 
 export let redis: Redis;
 
@@ -18,6 +19,8 @@ router.get('/', calcTime);
 app.use(router.routes()).use(router.allowedMethods());
 
 scheduledTask();
+
+runScripts();
 
 app.listen(1020, () => {
   const redisClient = new ioredis({ host: 'redis' });

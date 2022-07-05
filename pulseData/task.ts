@@ -10,10 +10,11 @@ import { totalLiquidTokenTvl } from './func/totalLiquidTokenTvl';
 import schedule from 'node-schedule';
 import { getHolder } from './func/getHolder';
 import dayjs from 'dayjs';
+import { ApiDecoration } from '@polkadot/api/types';
 
-export const _task = async () => {
+export const _task = async (karApi?: ApiDecoration<"promise">, acaApi?: ApiDecoration<"promise">) => {
   const date = dayjs().startOf('hour').toDate();
-  const karuraApi = await getApi('karura');
+  const karuraApi = karApi ? karApi : await getApi('karura');
   const karuraWallet = new Wallet(karuraApi, {
     supportAUSD: true,
   });
@@ -54,7 +55,7 @@ export const _task = async () => {
   });
   console.log('--------------- end karura db insert ---------------')
 
-  const acalaApi = await getApi('acala');
+  const acalaApi = acaApi ? acaApi : await getApi('acala');
   const acalaWallet = new Wallet(acalaApi, {
     supportAUSD: true,
   });

@@ -12,6 +12,8 @@ services:
     restart: always
     environment:
       NODE_ENV: production
+    env_file:
+      - .env
     networks:
       - network
     depends_on:
