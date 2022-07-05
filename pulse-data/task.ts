@@ -18,7 +18,6 @@ export const _task = async () => {
     supportAUSD: true,
   });
 
-  console.log(new Date())
   await karuraApi.isReady;
   console.log('karura api ready!')
   await karuraWallet.isReady;
@@ -100,8 +99,8 @@ export const _task = async () => {
 }
 
 export const scheduledTask = () => {
-  schedule.scheduleJob('* * 4,12,20 * * *', async () => {
-    // await _task()
-    console.log(new Date())
+  schedule.scheduleJob('0 0 4,12,20 * * *', async () => {
+    await _task()
+    // console.log(new Date())
   });
 }

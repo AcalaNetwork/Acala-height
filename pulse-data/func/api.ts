@@ -14,10 +14,8 @@ export const getApi = async (chainName: 'acala' | 'karura') => {
 
   if (chainName === "acala") {
     apiOptions = options({ provider: new WsProvider(ACALA_ENDPOINTS) });
-  } else if (chainName === "karura") {
-    apiOptions = options({ provider: new WsProvider(KARURA_ENDPOINTS) });
   } else {
-    throw `Invalid chain name: ${chainName}`;
+    apiOptions = options({ provider: new WsProvider(KARURA_ENDPOINTS) });
   }
 
   return ApiPromise.create(apiOptions);
