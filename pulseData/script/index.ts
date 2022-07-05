@@ -30,7 +30,7 @@ const queryKaruraChainData = async () => {
     const karuraHeight = karuraStart - karuraStep * i;
     const acalaHeight = acalaStart - acalaStep * i;
     const karuraHash = await karuraInstance.rpc.chain.getBlockHash(karuraHeight);
-    const acalaHash = await karuraInstance.rpc.chain.getBlockHash(acalaHeight);
+    const acalaHash = await acalaInstance.rpc.chain.getBlockHash(acalaHeight);
     const karuraApi = await karuraInstance.at(karuraHash);
     const acalaApi = await acalaInstance.at(acalaHash);
     console.log(i + 1, 'start');
