@@ -34,7 +34,7 @@ services:
     container_name: utils-mongo
     restart: always
     volumes:
-      - /mongo:/data/db
+      - ./mongo:/data/db
     networks:
       - network
     expose:
