@@ -1,3 +1,4 @@
+import { Wallet } from '@acala-network/sdk';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { _task } from '../task';
 
@@ -21,10 +22,19 @@ const queryKaruraChainData = async () => {
   const karuraWsProvider = new WsProvider('wss://karura.api.onfinality.io/public-ws');
   const karuraInstance = await ApiPromise.create({ provider: karuraWsProvider });
   await karuraInstance.isReady;
+  const karuraWallet = new Wallet(karuraInstance, {
+    supportAUSD: true,
+  });
+  await karuraWallet.isReady;
 
   const acalaWsProvider = new WsProvider('wss://acala-rpc-0.aca-api.network/');
   const acalaInstance = await ApiPromise.create({ provider: acalaWsProvider });
   await acalaInstance.isReady;
+  const acalaWallet = new Wallet(acalaInstance, {
+    supportAUSD: true,
+  });
+  await acalaWallet.isReady;
+
 
   for (let i = 0; i < 120; i++) {
     const karuraHeight = karuraStart - karuraStep * i;
