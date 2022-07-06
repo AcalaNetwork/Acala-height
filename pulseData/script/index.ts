@@ -12,7 +12,7 @@ import { pulseModal } from '../db/modal';
 import { _task } from '../task';
 
 export const runScripts = () => {
-  queryKaruraChainData();
+  // queryKaruraChainData();
 }
 
 const queryKaruraChainData = async () => {
@@ -37,7 +37,6 @@ const queryKaruraChainData = async () => {
   });
   await acalaWallet.isReady;
 
-
   for (let i = 0; i < 120; i++) {
     const karuraHeight = karuraStart - karuraStep * i;
     const acalaHeight = acalaStart - acalaStep * i;
@@ -48,7 +47,7 @@ const queryKaruraChainData = async () => {
     const chianDate = await karuraApi.query.timestamp.now();
     console.log(i + 1, 'start');
 
-    const date = dayjs(chianDate.toString()).startOf('hour').toDate();
+    const date = dayjs(Number(chianDate.toString())).startOf('hour').toDate();
     const karuraStableTokenHolder = await getHolder('KUSD', 'KARURA');
     const karuraStableTokenIssuance = await karuraWallet.getIssuance('KUSD');
     const karuraStable = await stableCoin(karuraApi, karuraWallet);
@@ -83,7 +82,7 @@ const queryKaruraChainData = async () => {
     const acalaTotalLpTokenStaking = await lpTokenStakingTvl(acalaApi, acalaWallet);
     const acalaTotalLiquidityPool = await liquidityPoolTvl(acalaApi, acalaWallet)
     const { total: lcdot, value: lcdotValue } = await lcdotTvl(acalaWallet);
-    const lcDOTHolder = await getHolder('LCDOT', 'ACALA');
+    const lcDOTHolder = await getHolder('lc://13', 'ACALA');
 
     await pulseModal.create({
       network: 'ACALA',
