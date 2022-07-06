@@ -56,6 +56,6 @@ export const pulseQuery = async (ctx: Context) => {
   }
 
   return ctx.body = {
-    totalTVLData,stableTokenData,liquidStaking,lcDot,swap,bridge
+    totalTVLData,stableTokenData,liquidStaking,lcDot,swap,bridge,time: datas[0].createTime
   }
 }
