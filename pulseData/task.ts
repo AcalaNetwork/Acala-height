@@ -73,7 +73,7 @@ export const _task = async (karApi?: ApiDecoration<"promise">, acaApi?: ApiDecor
   const acalaTotalLpTokenStaking = await lpTokenStakingTvl(acalaApi, acalaWallet);
   const acalaTotalLiquidityPool = await liquidityPoolTvl(acalaApi, acalaWallet)
   const {total: lcdot, value: lcdotValue} = await lcdotTvl(acalaWallet);
-  const lcDOTHolder = await getHolder('LCDOT', 'ACALA');
+  const lcDOTHolder = await getHolder('lc://13', 'ACALA');
   // const acalaSwap = acalaTotalLiquidityPool.add(acalaTotalLpTokenStaking)
   // const acalaTotal = acalaStable.add(acalaTotalLiquidTokenValue).add(acalaTotalStakingTokenBridgeValue).add(acalaSwap).add(lcdotValue)
   console.log('--------------- end acala data fetch ---------------')
