@@ -44,10 +44,10 @@ const queryKaruraChainData = async () => {
     const acalaHash = await acalaInstance.rpc.chain.getBlockHash(acalaHeight);
     const karuraApi = await karuraInstance.at(karuraHash) as any;
     const acalaApi = await acalaInstance.at(acalaHash) as any;
-    const chianDate = await karuraApi.query.timestamp.now();
+    const karuraChianDate = await karuraApi.query.timestamp.now();
+    const acalaChainDate = await acalaApi.query.timestamp.now();
     console.log(i + 1, 'start');
 
-    const date = dayjs(Number(chianDate.toString())).startOf('hour').toDate();
     const karuraStableTokenHolder = await getHolder('KUSD', 'KARURA');
     const karuraStableTokenIssuance = await karuraWallet.getIssuance('KUSD');
     const karuraStable = await stableCoin(karuraApi, karuraWallet);
@@ -71,7 +71,7 @@ const queryKaruraChainData = async () => {
       liquidityPoolValue: karuraTotalLiquidityPool.toNumber(),
       lcDOTValue: 0,
       lcDOTHolder: 0,
-      createTime: date
+      createTime: dayjs(Number(karuraChianDate.toString())).startOf('hour').toDate()
     });
     
     const acalaStableTokenHolder = await getHolder('AUSD', 'ACALA');
@@ -99,7 +99,7 @@ const queryKaruraChainData = async () => {
       liquidityPoolValue: acalaTotalLiquidityPool.toNumber(),
       lcDOTValue: lcdotValue.toNumber(),
       lcDOTHolder: lcDOTHolder,
-      createTime: date
+      createTime: dayjs(Number(acalaChainDate.toString())).startOf('hour').toDate()
     });
   }
 }
