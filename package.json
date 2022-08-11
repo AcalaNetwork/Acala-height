@@ -16,6 +16,7 @@
     "@acala-network/types": "^4.1.6-7",
     "@open-web3/scanner": "^1.0.1",
     "@polkadot/api": "^8.2.2-2",
+    "axios": "^0.27.2",
     "dayjs": "^1.11.1",
     "graphql": "^15.2.0",
     "graphql-request": "^4.3.0",
