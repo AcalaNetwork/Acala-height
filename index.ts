@@ -6,6 +6,7 @@ import Koa from 'koa';
 import mongo from 'mongoose';
 import { scheduledTask } from './pulseData/task';
 import { pulseQuery } from './pulseData';
+import { risk } from './risk';
 // import { runScripts } from './pulseData/script';
 
 export let redis: Redis;
@@ -15,6 +16,7 @@ const router = new Router();
 
 router.get('/apr', calcApr);
 router.get('/pulse', pulseQuery);
+router.get('/risk', risk);
 router.get('/', calcTime);
 app.use(router.routes()).use(router.allowedMethods());
 
