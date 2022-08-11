@@ -20,7 +20,7 @@ export const risk = async (ctx: Context) => {
     };
   }
 
-  const data = await axios.post('https://api.merklescience.com/api/v4/addresses', {
+  const data = await axios.post('https://api.merklescience.com/api/v4/addresses/', {
     identifier: address,
     blockchain: 12
   }, {
