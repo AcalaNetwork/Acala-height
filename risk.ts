@@ -29,7 +29,7 @@ export const risk = async (ctx: Context) => {
     }
   })
 
-  if(data.status === 200) {
+  if(data.status.toString().startsWith(2)) {
     const result = {
       risk_level: data.data.risk_level,
       tag_type_verbose: data.data.tags?.owner?.tag_type_verbose || '',
